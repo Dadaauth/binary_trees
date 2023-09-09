@@ -29,9 +29,9 @@ else
 fi
 
 if [ "$2" = "" ]; then
-	valgrind ./a.out;
+	./a.out;
 elif [ "$2" = "$empty" ]; then
-	valgrind ./a.out;
+	./a.out;
 else
-	valgrind ./$2;
+	./$2;
 fi
