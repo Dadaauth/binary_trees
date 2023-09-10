@@ -29,9 +29,9 @@ else
 fi
 
 if [ "$2" = "" ]; then
-	./a.out;
+	$4 $5 ./a.out;
 elif [ "$2" = "$empty" ]; then
-	./a.out;
+	$4 $5 ./a.out;
 else
-	./$2;
+	$4 $5 ./$2;
 fi
