@@ -42,6 +42,43 @@ binary_tree_t **get_parents(binary_tree_t *node)
 	return (parents);
 }
 /**
+ * algo1 - first algorithm
+ * @first: node
+ * @second: node
+ * Return: the ancestor
+ */
+binary_tree_t *first_algo(const binary_tree_t *first,
+		const binary_tree_t *second)
+{
+	binary_tree_t **parents1, **parents2;
+	binary_tree_t *ancestor = NULL;
+	size_t i = 0, j = 0, fDepth, sDepth;
+
+	/*printf("Using first algorithm!\n\n");*/
+	fDepth = binary_tree_depth(first);
+	sDepth = binary_tree_depth(second);
+
+	parents1 = get_parents((binary_tree_t *) first);
+	parents2 = get_parents((binary_tree_t *) second);
+	while (i < (fDepth + 1))
+	{
+		while (j < (sDepth + 1))
+		{
+			if (parents1[i] == parents2[j])
+			{
+				ancestor = parents1[i];
+				break;
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+		if (ancestor != NULL)
+			break;
+	}
+	return (ancestor);
+}
+/**
  * binary_trees_ancestor - finds the lowest common ancestor of two nodes
  * @first: the first node
  * @second: the second node
@@ -51,10 +88,8 @@ binary_tree_t **get_parents(binary_tree_t *node)
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
 		const binary_tree_t *second)
 {
-	binary_tree_t **parents1, **parents2;
 	binary_tree_t *ancestor = NULL;
 	binary_tree_t *fFake, *sFake;
-	size_t i = 0, j = 0, fDepth, sDepth;
 	int algo1 = 0;
 
 	if (first == NULL || second == NULL)
@@ -64,28 +99,7 @@ binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
 	if (algo1 == 0)
 	{
 		/*First Algorithm [Slower]*/
-		/*printf("Using first algorithm!\n\n");*/
-		fDepth = binary_tree_depth(first);
-		sDepth = binary_tree_depth(second);
-
-		parents1 = get_parents((binary_tree_t *) first);
-		parents2 = get_parents((binary_tree_t *) second);
-		while (i < (fDepth + 1))
-		{
-			while (j < (sDepth + 1))
-			{
-				if (parents1[i] == parents2[j])
-				{
-					ancestor = parents1[i];
-					break;
-				}
-				j++;
-			}
-			j = 0;
-			i++;
-			if (ancestor != NULL)
-				break;
-		}
+		ancestor = first_algo(first, second);
 	}
 	else
 	{
